@@ -12,7 +12,7 @@ We used the python library Skill Metrics, available on
 <https://github.com/PeterRochford/SkillMetrics.git>
 
 
-* ### MSC_Taylor_Diagram.py
+* ### MSC_mean-state-map.py
 Reads ppt data from Reanalyses, and CMIP6;
 
 Addresses the mean PPT field south of 45• and the difference of each dataset from the ens. mean;
