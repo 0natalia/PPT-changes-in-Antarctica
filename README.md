@@ -1,4 +1,4 @@
-# Precipitation_changes_during_the_Hist_Period_Antarctica
+# Precipitation_changes_in_Antarctica
 Set of Python codes that read reanalyses and CMIP6 models to addresses PPT and SST changes.
 
 * ### MSC_Taylor_Diagram.py
