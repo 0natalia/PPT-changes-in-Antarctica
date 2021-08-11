@@ -21,3 +21,16 @@ The map is overlaped with the multi-model agreement. The model agreement is defi
 
 At last, this script plots: (i) map of all-time average ppt for each dataset
                             (ii) map of the 50yr difference for each dset
+                            
+
+* ### MSC_seasonal_cycle.py
+Reads CMIP6 (AMIP & Hist) and reanalysis datasets and calculates their ensemble means;
+
+For the Antarctic regions defined in mscbib [Austral, EAIS, Ross, Weddell, and WAIS], the monthly data is grouped by month in order to
+address the annual cycle.
+
+This script plots: (i) ensemble mean annual cycle line plot
+                   (ii) bar plot annual cycle for each dataset
+
+Note: always calculate reanalysis-ensemble mean and model-ensemble
+mean separately. Do not mix different data types.
