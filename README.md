@@ -1,5 +1,18 @@
-# Precipitation_changes_in_Antarctica
+# Precipitation changes in Antarctica
 Set of Python codes that read reanalyses and CMIP6 models to addresses PPT and SST changes.
+
+* ### MSC_timeseries_and_trends.py
+Reads CMIP6 and reanalyses datasets as an ensemble and calculates their ens. mean.
+
+Estimates the precipitation linear trend for Antarctic regions [Austral, EAIS, Ross, Wed, and WAIS].
+*Cut regions using clipper function in mscbib
+
+This script plots: (i) regional precipitation time series
+                            (ii) regional ppt anomalies relative to 1979:2010
+                            (iii) calculated trends for each dataset
+                                  as barplot
+                            (iv) linear fit time series
+                            (v) ppt trend per dataset as a heatmap
 
 * ### MSC_Taylor_Diagram.py
 Reads sst and ppt data from Reanalyses, and CMIP6;
@@ -31,6 +44,7 @@ address the annual cycle.
 
 This script plots: (i) ensemble mean annual cycle line plot
                    (ii) bar plot annual cycle for each dataset
+
 
 Note: always calculate reanalysis-ensemble mean and model-ensemble
 mean separately. Do not mix different data types.
