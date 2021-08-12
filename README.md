@@ -5,7 +5,8 @@ Set of Python codes that read reanalyses and CMIP6 models to addresses PPT and S
 Reads CMIP6 and reanalyses datasets as an ensemble and calculates their ens. mean.
 
 Estimates the precipitation linear trend for Antarctic regions [Austral, EAIS, Ross, Wed, and WAIS].
-*Cut regions using clipper function in mscbib
+
+*Cut regions using clipper function in mscbib*
 
 This script plots: (i) regional precipitation time series
                             (ii) regional ppt anomalies relative to 1979:2010
