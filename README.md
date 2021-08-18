@@ -47,5 +47,25 @@ This script plots: (i) ensemble mean annual cycle line plot
                    (ii) bar plot annual cycle for each dataset
 
 
+* ### MSC_hist-amip_map.py
+Reads sets of CMIP6 hist and amip simulations as ensemble, and calculates the ensemble mean.
+
+Calculates the difference in precipitation between the experiments (AMIP - CMIP = possible ocean influence on ppt)
+
+Estimates the difference for the mean period 1979-2014, common for both experiments.
+
+At last, this script plots: (i) map of the difference between the datasets
+
+The map is overlaped with the multi-model agreement. The model agreement is defined by the ensemble size through binomial distribution. For achieving 95%  confidence level on agreement, in this study, 6/7 reanalyses and 15/23 models must agree.
+
+
+* ### MSC_sst_vs_PPT_trendMap.py
+Reads CMIP6 'tos' and 'pr' datasets as ensemble, and calculates their ens. mean.
+
+For the Antarctic regions defined in mscbib [Austral, EAIS, Ross, Wed, and WAIS], the script estimates the variables' linear trend and other statistics.
+
+This script plots: PPT trend and SST trend.
+
+
 Note: always calculate reanalysis-ensemble mean and model-ensemble
 mean separately. Do not mix different data types.
