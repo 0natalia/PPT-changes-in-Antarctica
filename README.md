@@ -1,9 +1,10 @@
 # Precipitation changes in Antarctica
 Set of Python codes that read reanalyses and CMIP6 models to addresses PPT and SST changes.
 
-* ### MSC_timeseries_and_trends.py
-Reads CMIP6 and reanalyses datasets as an ensemble and calculates their ens. mean.
+All scripts here read CMIP6 and reanalyses datasets as an ensemble and calculates their ens. mean.
 
+
+* ### MSC_timeseries_and_trends.py
 Estimates the precipitation linear trend for Antarctic regions [Austral, EAIS, Ross, Wed, and WAIS].
 
 *Cut regions using clipper function in mscbib*
@@ -16,8 +17,6 @@ This script plots: (i) regional precipitation time series
                             (v) ppt trend per dataset as a heatmap
 
 * ### MSC_Taylor_Diagram.py
-Reads sst and ppt data from Reanalyses, and CMIP6;
-
 Estimates the secondary statistics necessary to plot the Taylor Diagram - RMS, Pearson correlation coefficient, and Standard Deviation.
 
 Plots the Taylor Diagram
@@ -27,8 +26,6 @@ We used the python library Skill Metrics, available on
 
 
 * ### MSC_mean-state-map.py
-Reads ppt data from Reanalyses, and CMIP6;
-
 Addresses the mean PPT field south of 45• and the difference of each dataset from the ens. mean;
 
 The map is overlaped with the multi-model agreement. The model agreement is defined by the ensemble size through binomial distribution. For achieving 95%  confidence level on agreement, in this study, 6/7 reanalyses and 15/23 models must agree.
@@ -38,8 +35,6 @@ At last, this script plots: (i) map of all-time average ppt for each dataset
                             
 
 * ### MSC_seasonal_cycle.py
-Reads CMIP6 (AMIP & Hist) and reanalysis datasets and calculates their ensemble means;
-
 For the Antarctic regions defined in mscbib [Austral, EAIS, Ross, Weddell, and WAIS], the monthly data is grouped by month in order to
 address the annual cycle.
 
@@ -48,8 +43,6 @@ This script plots: (i) ensemble mean annual cycle line plot
 
 
 * ### MSC_hist-amip_map.py
-Reads sets of CMIP6 hist and amip simulations as ensemble, and calculates the ensemble mean.
-
 Calculates the difference in precipitation between the experiments (AMIP - CMIP = possible ocean influence on ppt)
 
 Estimates the difference for the mean period 1979-2014, common for both experiments.
@@ -60,11 +53,14 @@ The map is overlaped with the multi-model agreement. The model agreement is defi
 
 
 * ### MSC_sst_vs_PPT_trendMap.py
-Reads CMIP6 'tos' and 'pr' datasets as ensemble, and calculates their ens. mean.
-
 For the Antarctic regions defined in mscbib [Austral, EAIS, Ross, Wed, and WAIS], the script estimates the variables' linear trend and other statistics.
 
 This script plots: PPT trend and SST trend.
+
+* ### MSC_sst_vs_PPT_regress.py
+For the Antarctic regions defined in mscbib [Austral, EAIS, Ross, Wed and WAIS], it estimates the variables linear trend and secondary statistics.
+
+This script plots: PPT trend X SST trend, and their correlation as R2.
 
 
 Note: always calculate reanalysis-ensemble mean and model-ensemble
