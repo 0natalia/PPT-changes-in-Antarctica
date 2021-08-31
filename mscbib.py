@@ -11,6 +11,108 @@ import xarray as xr
 import numpy as np
 from scipy.stats import t, linregress
 import matplotlib as mpl
+import pandas as pd
+
+
+def sam_index(ds):
+    '''
+    Calculate an index of the Southern Annular Mode.
+
+    Ref: Gong & Wang (1999). Definition of Antarctic Oscillation index.
+      Geophysical Research Letters, 26(4), 459-462.
+      doi:10.1029/1999GL900003
+    
+    Code based on https://github.com/DamienIrving/climate-analysis.git
+    Expected input: Mean sea level pressure data.
+
+    Concept: Difference between the normalised zonal mean pressure
+      at 40S and 65S.
+
+    '''
+
+    il = [-40, -65]
+    z = {'40': [], '65': []}
+    #
+    for i, n in zip(il, z):
+        pres = ds.slp.sel(lat=slice(i - 0.5, i + 0.5)).mean(['lat', 'lon'])
+        clim = pres.groupby('time.season').mean(dim='time')
+        anom = pres.groupby('time.season') - clim
+        stdev = pres.groupby('time.season').std(dim='time')
+        z[n] = anom.groupby('time.season') / stdev
+    #
+    #
+    idx = (list(z.values())[0] - list(z.values())[1]).to_pandas().T
+    #
+    # statistics on the Index
+    # fit = stats.linregress(np.arange(1, len(Izw3) + 1), Izw3['REAN'])
+    tb = np.arange(1, len(idx.loc['1900':'1979']) + 1)
+    fitBEF = linregress(tb, idx.loc['1900':'1979']['MRM7'])
+    ta = np.arange(1, len(idx.loc['1980':'2014']) + 1)
+    fitAFT = linregress(ta, idx.loc['1980':'2014']['MRM7'])
+    #
+    linebef = pd.Series(fitBEF.slope * tb + fitBEF.intercept, index=idx.loc['1900':'1979'].index)
+    lineaft = pd.Series(fitAFT.slope * ta + fitAFT.intercept, index=idx.loc['1980':'2014'].index)
+    #
+    eb = tinv(0.05, len(tb) - 2)  # 95% confidence interval on slope
+    ea = tinv(0.05, len(ta) - 2)  # 95% confidence interval on slope
+    pB80 = ptext(fitBEF.pvalue)
+    pA80 = ptext(fitAFT.pvalue)
+    #
+    return ({'idx': idx, 'fitBEF': fitBEF, 'fitAFT': fitAFT, 'linebef': linebef, 'lineaft': lineaft, 'errob': eb, 'erroa': ea, 'pB80': pB80, 'pA80': pA80})
+
+
+def zw3_index(ds):
+    '''
+    Calculate an index of the Southern Hemisphere ZW3 pattern.
+
+    Ref: Raphael (2004). A zonal wave 3 index for the Southern Hemisphere.
+      Geophysical Research Letters, 31(23), L23212.
+      doi:10.1029/2004GL020365.
+
+    Code based on https://github.com/DamienIrving/climate-analysis.git
+    Expected input: Raphael (2004) uses is the 500hPa geopotential height,
+      sea level pressure or 500hPa zonal anomalies which are constructed by
+      removing the zonal mean of the geopotential height from each grid point
+      (preferred). The running mean (and zonal mean too if using it) should
+      have been applied to the input data beforehand. Raphael (2004) uses a
+      3-month running mean.
+
+    '''
+
+    # Resample to seasonal frequency
+    t = ds.resample(time='QS-DEC').mean()  # QS = quarter freq starting in DEC
+    # Visual test
+    # t.slp.sel(time=slice('1985', '1987')).mean(
+    #                      ['lat', 'lon']).plot(hue='realization')
+    loc = [50, 166, 284]  # wave ridges
+    z = {'50': [], '166': [], '284': []}
+    #
+    for i, n in zip(loc, z):
+        pres = t.slp.sel(lat=slice(-49.5, -48.5), lon=i).mean('lat')
+        clim = pres.groupby('time.season').mean(dim='time')
+        anom = pres.groupby('time.season') - clim
+        stdev = pres.groupby('time.season').std(dim='time')
+        z[n] = anom.groupby('time.season') / stdev
+    #
+    #
+    idx = ((list(z.values())[0] + list(z.values())[1] + list(z.values())[2]) / 3).to_pandas()
+    #
+    # statistics on the Index
+    # fit = stats.linregress(np.arange(1, len(Izw3) + 1), Izw3['REAN'])
+    tb = np.arange(1, len(idx.loc['1900':'1979']) + 1)
+    fitBEF = linregress(tb, idx.loc['1900':'1979']['MRM7'])
+    ta = np.arange(1, len(idx.loc['1980':'2014']) + 1)
+    fitAFT = linregress(ta, idx.loc['1980':'2014']['MRM7'])
+    #
+    linebef = pd.Series(fitBEF.slope * tb + fitBEF.intercept, index=idx.loc['1900':'1979'].index)
+    lineaft = pd.Series(fitAFT.slope * ta + fitAFT.intercept, index=idx.loc['1980':'2014'].index)
+    #
+    eb = tinv(0.05, len(tb) - 2)  # 95% confidence interval on slope
+    ea = tinv(0.05, len(ta) - 2)  # 95% confidence interval on slope
+    pB80 = ptext(fitBEF.pvalue)
+    pA80 = ptext(fitAFT.pvalue)
+    #
+    return ({'idx': idx, 'fitBEF': fitBEF, 'fitAFT': fitAFT, 'linebef': linebef, 'lineaft': lineaft, 'errob': eb, 'erroa': ea, 'pB80': pB80, 'pA80': pA80})
 
 
 def linear_trend3D(x):
